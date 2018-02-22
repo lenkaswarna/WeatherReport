@@ -1,0 +1,76 @@
+<html>
+
+<head>
+    <!-- Bootstrap 4 begin -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!-- Bootstrap 4 end -->
+    <title>Weather Map</title>
+    <style>
+        html,
+        body {
+            background-color: powderblue;
+        }
+        
+        #data {
+            padding-top: 6cm;
+            padding-left: 14cm;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row align-self-center">
+            <fieldset id="data">
+                <div class="col-4 align-self-start">
+
+                </div>
+                <div class="col-4 align-self-center">
+                    <form onsubmit="return searchCity()">
+                        <input id="city" type="text" class="city-input" placeholder="Enter a City" required/>
+                        <input type="submit" class="city-button" value="Get Weather" style="margin-left: 43%;"></input>
+                    </form>
+                </div>
+                <div class="col-4 align-self-end">
+
+                </div>
+            </fieldset>
+
+        </div>
+        <p id="demo" style="margin-left: 43%;"></p>
+
+    </div>
+
+    <script>
+        function searchCity() {
+            var City = document.getElementById('city').value;
+            var apiKey = '6d9b7f75c755d8cea45a3b0dd5fc082d';
+            // console.log(req.body.city);
+            var url = "https://api.openweathermap.org/data/2.5/weather?q=" + City + "&appid=" + apiKey
+            console.log("Fetch from service: " + url);
+            //alert(url);
+            // var city = document.querySelectorAll('city-input');
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var weather_data = JSON.parse(xhttp.response);
+
+                    //document.getElementById("demo").innerHTML = this.responseText;
+                    document.getElementById("demo").innerHTML = weather_data.main.temp + "&deg;C";
+
+                    //var display_data = weather_data.main.temp + "&deg;C";
+
+                }
+            };
+            xhttp.open("GET", url, true);
+            xhttp.send();
+
+            return false;
+        }
+    </script>
+</body>
+
+</html>
